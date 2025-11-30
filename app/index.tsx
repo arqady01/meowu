@@ -32,16 +32,17 @@ export default function DashboardScreen() {
       return <Box style={styles.placeholder} />;
     }
 
-    return <CatModuleCard module={item} onPress={item.route ? () => router.push(item.route) : undefined} />;
+    const route = item.route;
+    return <CatModuleCard module={item} onPress={route ? () => router.push(route) : undefined} />;
   };
 
   const keyExtractor = useCallback((item: ModuleGridItem, index: number) => (item ? item.id : `placeholder-${index}`), []);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <Box flex={1}>
-        <ThemeBackground />
-        <SoftBackground />
+    <Box flex={1}>
+      <ThemeBackground />
+      <SoftBackground />
+      <SafeAreaView style={styles.safeArea}>
         <FlatList
           data={modulesGrid}
           keyExtractor={keyExtractor}
@@ -52,8 +53,8 @@ export default function DashboardScreen() {
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={<DashboardHeader />}
         />
-      </Box>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Box>
   );
 }
 
@@ -103,7 +104,7 @@ function DashboardHeader() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FDF5EA',
+    backgroundColor: 'transparent',
   },
   listContent: {
     paddingHorizontal: 20,

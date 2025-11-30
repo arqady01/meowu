@@ -1,6 +1,6 @@
-import { ScrollView } from 'react-native';
+import { Text, VStack } from '@gluestack-ui/themed';
+import { FlatList, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { VStack, Text } from '@gluestack-ui/themed';
 
 import { ThemeOptionCard } from '@/components/settings/theme-option-card';
 import { useThemeContext } from '@/context/theme-context';
@@ -8,32 +8,45 @@ import { useThemeContext } from '@/context/theme-context';
 export default function ThemeGalleryScreen() {
   const { options, selectedThemeId, selectTheme } = useThemeContext();
 
+  const renderItem = ({ item }: { item: (typeof options)[number] }) => (
+    <ThemeOptionCard option={item} isActive={selectedThemeId === item.id} onSelect={() => selectTheme(item.id)} />
+  );
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FDF5EA' }}>
-      <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 48 }} showsVerticalScrollIndicator={false}>
-        <VStack space="lg">
-          <VStack space="xs">
-            <Text fontSize="$xs" color="#A88975" textTransform="uppercase" letterSpacing={2}>
-              theme scene
-            </Text>
+    <SafeAreaView style={styles.safeArea} edges={['left', 'right', 'bottom']}>
+      <FlatList
+        data={options}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        renderItem={renderItem}
+        contentContainerStyle={styles.listContent}
+        columnWrapperStyle={styles.columnWrapper}
+        ListHeaderComponent={
+          <VStack space="xs" mb="$6">
             <Text fontSize="$3xl" fontWeight="$black" color="#3D2C1F">
-              选择猫咪布景
-            </Text>
-            <Text color="#7A6252">
-              轻触即可切换猫咪场景，动画会立即呈现在首页中。
+              主题
             </Text>
           </VStack>
-          {options.map((option) => (
-            <ThemeOptionCard
-              key={option.id}
-              option={option}
-              isActive={selectedThemeId === option.id}
-              onSelect={() => selectTheme(option.id)}
-            />
-          ))}
-        </VStack>
-      </ScrollView>
+        }
+        showsVerticalScrollIndicator={false}
+      />
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#FDF5EA',
+  },
+  listContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 48,
+    paddingTop: 16,
+    gap: 16,
+  },
+  columnWrapper: {
+    gap: 12,
+  },
+});
 

@@ -1,9 +1,9 @@
+import { Ionicons } from '@expo/vector-icons';
+import { Box, HStack, Text, VStack } from '@gluestack-ui/themed';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Box, HStack, Text, VStack } from '@gluestack-ui/themed';
-import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 
 import { SettingCard } from '@/components/settings/setting-card';
 import { useThemeContext } from '@/context/theme-context';
@@ -14,7 +14,7 @@ export default function SettingsScreen() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FDF5EA' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FDF5EA' }} edges={['left', 'right', 'bottom']}>
       <ScrollView contentContainerStyle={{ padding: 20 }} showsVerticalScrollIndicator={false}>
         <VStack space="lg">
           <Box>
