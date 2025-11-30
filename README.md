@@ -1,50 +1,35 @@
-# Welcome to your Expo app 👋
+# Meowu · React Native App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> Expo Router + Gluestack UI + animated cat themes 🐾
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## 开发
 
 ```bash
-npm run reset-project
+npm install
+npm run start   # 选择 iOS / Android / Web
+npm run ios     # 启动 iOS 模拟器
+npm run android # 启动 Android 模拟器
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 功能亮点
 
-## Learn more
+- **猫屋仪表盘**：暖色奶油风入口模块与互动提醒。
+- **设置页**：通知开关、主题入口、Gluestack UI 卡片。
+- **主题布景**：切换不同 GIF 动画，首页实时更新。
+- **资源同步**：Flutter 时代的图标、主题 GIF 已迁移至 `assets/`。
 
-To learn more about developing your project with Expo, look at the following resources:
+## 目录速览
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- `app/`：Expo Router 页面（`index`, `settings`, `theme-gallery`）。
+- `components/`：仪表盘、设置、主题卡片等复用组件。
+- `constants/`：模块列表、主题选项。
+- `context/`：`ThemeProvider`，共享当前主题状态。
+- `assets/`：统一的图标、动画、应用图标。
 
-## Join the community
+## 技术栈
 
-Join our community of developers creating universal apps.
+- Expo 54 / React Native 0.81
+- Gluestack UI（`GluestackUIProvider + config`）
+- Expo Image、Vector Icons
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+欢迎在 `app/` 中继续扩展更多喵屋能力！
