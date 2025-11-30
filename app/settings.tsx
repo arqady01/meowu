@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { SafeAreaView, ScrollView, Switch } from 'react-native';
+import { ScrollView, Switch } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Box, HStack, Text, VStack } from '@gluestack-ui/themed';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';

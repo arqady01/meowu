@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
-import { FlatList, ListRenderItem, SafeAreaView, StyleSheet } from 'react-native';
+import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Box, HStack, Text, VStack } from '@gluestack-ui/themed';
 import { useRouter } from 'expo-router';
 
