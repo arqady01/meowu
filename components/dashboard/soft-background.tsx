@@ -11,25 +11,7 @@ const pawPrints = [
 
 const SoftBackgroundComponent = () => {
   return (
-    <Box
-      position="absolute"
-      top={0}
-      left={0}
-      right={0}
-      bottom={0}
-      backgroundColor="#FDF5EA"
-      opacity={0.9}
-    >
-      <Box
-        position="absolute"
-        top={-120}
-        left="-20%"
-        right="-20%"
-        height={320}
-        borderBottomLeftRadius={480}
-        borderBottomRightRadius={480}
-        backgroundColor="#FFEAD1"
-      />
+    <Box pointerEvents="none" style={styles.container}>
       {pawPrints.map((print, index) => (
         <View
           key={index}
@@ -55,6 +37,9 @@ SoftBackgroundComponent.displayName = 'SoftBackground';
 export const SoftBackground = memo(SoftBackgroundComponent);
 
 const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+  },
   paw: {
     position: 'absolute',
     borderLeftWidth: 2,

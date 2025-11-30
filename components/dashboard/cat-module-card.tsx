@@ -20,25 +20,8 @@ export function CatModuleCard({ module, onPress, footer }: Props) {
       onPress={onPress}
       style={({ pressed }) => [styles.card, pressed && styles.pressed, !onPress && styles.disabled]}
     >
-      <Box
-        bg="rgba(255,255,255,0.92)"
-        borderRadius="$3xl"
-        borderWidth={1.2}
-        borderColor="rgba(247, 212, 187, 0.6)"
-        p="$3"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Box
-          bg={`${module.accent}55`}
-          borderRadius="$2xl"
-          w={72}
-          h={72}
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Image source={module.asset} style={styles.icon} contentFit="contain" />
-        </Box>
+      <Box alignItems="center" justifyContent="center" py="$4">
+        <Image source={module.asset} style={styles.icon} contentFit="contain" />
         <Text mt="$3" color="#3D2C1F" fontWeight="$bold" textAlign="center">
           {module.title}
         </Text>
@@ -51,17 +34,18 @@ export function CatModuleCard({ module, onPress, footer }: Props) {
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    padding: 6,
+    paddingVertical: 16,
+    paddingHorizontal: 8,
   },
   pressed: {
-    transform: [{ scale: 0.98 }],
+    opacity: 0.6,
   },
   disabled: {
     opacity: 0.65,
   },
   icon: {
-    width: 48,
-    height: 48,
+    width: 56,
+    height: 56,
   },
 });
 

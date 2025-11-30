@@ -1,32 +1,52 @@
-import { useCallback } from 'react';
+import { Box, HStack, Text, VStack } from '@gluestack-ui/themed';
+import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
+import { useCallback, useMemo } from 'react';
 import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Box, HStack, Text, VStack } from '@gluestack-ui/themed';
-import { useRouter } from 'expo-router';
 
 import { CatModuleCard } from '@/components/dashboard/cat-module-card';
 import { SoftBackground } from '@/components/dashboard/soft-background';
-import { ThemeHero } from '@/components/dashboard/theme-hero';
+import { ThemeBackground } from '@/components/dashboard/theme-background';
 import { CAT_MODULES, CatModule } from '@/constants/modules';
+
+type ModuleGridItem = CatModule | null;
+
+const GRID_COLUMNS = 4;
+const MIN_GRID_CELLS = 8;
 
 export default function DashboardScreen() {
   const router = useRouter();
 
-  const renderItem: ListRenderItem<CatModule> = ({ item }) => (
-    <CatModuleCard module={item} onPress={item.route ? () => router.push(item.route) : undefined} />
-  );
+  const modulesGrid = useMemo<ModuleGridItem[]>(() => {
+    const items: ModuleGridItem[] = [...CAT_MODULES];
+    const targetLength = Math.max(MIN_GRID_CELLS, Math.ceil(items.length / GRID_COLUMNS) * GRID_COLUMNS);
+    while (items.length < targetLength) {
+      items.push(null);
+    }
+    return items;
+  }, []);
 
-  const keyExtractor = useCallback((item: CatModule) => item.id, []);
+  const renderItem: ListRenderItem<ModuleGridItem> = ({ item }) => {
+    if (!item) {
+      return <Box style={styles.placeholder} />;
+    }
+
+    return <CatModuleCard module={item} onPress={item.route ? () => router.push(item.route) : undefined} />;
+  };
+
+  const keyExtractor = useCallback((item: ModuleGridItem, index: number) => (item ? item.id : `placeholder-${index}`), []);
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Box flex={1} bg="#FDF5EA">
+      <Box flex={1}>
+        <ThemeBackground />
         <SoftBackground />
         <FlatList
-          data={CAT_MODULES}
+          data={modulesGrid}
           keyExtractor={keyExtractor}
           renderItem={renderItem}
-          numColumns={2}
+          numColumns={GRID_COLUMNS}
           contentContainerStyle={styles.listContent}
           columnWrapperStyle={styles.columnWrapper}
           showsVerticalScrollIndicator={false}
@@ -39,42 +59,43 @@ export default function DashboardScreen() {
 
 function DashboardHeader() {
   return (
-    <VStack space="md" mb="$4">
-      <Box>
-        <Text fontSize="$3xl" fontWeight="$black" color="#3D2C1F">
-          喵屋星球
-        </Text>
-        <Text fontSize="$md" color="#6B5648" mt="$1">
-          暖色奶油风的猫咪日程，让灵感与治愈同在。
-        </Text>
-      </Box>
-      <Box
-        bg="#FFECD4"
-        borderRadius="$3xl"
-        px="$4"
-        py="$3"
-        borderWidth={1}
-        borderColor="#F6D8B5"
-        shadowColor="#F4C79B"
-        shadowOffset={{ width: 0, height: 10 }}
-        shadowOpacity={0.25}
-        shadowRadius={18}
-      >
-        <HStack alignItems="center" justifyContent="space-between">
-          <VStack flex={1}>
-            <Text fontSize="$lg" fontWeight="$bold" color="#3D2C1F">
-              今日关怀
+    <VStack space="lg" mb="$4">
+      <HStack alignItems="center" justifyContent="space-between">
+        <HStack alignItems="center" space="md">
+          <Box
+            borderRadius="$full"
+            overflow="hidden"
+            borderWidth={2}
+            borderColor="rgba(255, 255, 255, 0.6)"
+            shadowColor="#EFC9A4"
+            shadowOffset={{ width: 0, height: 4 }}
+            shadowOpacity={0.25}
+            shadowRadius={10}
+          >
+            <Image source={require('@/assets/icons/profile.png')} style={{ width: 64, height: 64 }} contentFit="cover" />
+          </Box>
+          <VStack>
+            <Text fontSize="$md" color="#7A6252">
+              喵屋住客
             </Text>
-            <Text color="#7A6252" mt="$1">
-              记得给猫咪补充清水，并查看晚间的互动计划。
+            <Text fontSize="$3xl" fontWeight="$black" color="#3D2C1F">
+              花卷
             </Text>
           </VStack>
         </HStack>
-      </Box>
-      <ThemeHero />
-      <Text fontSize="$lg" fontWeight="$bold" color="#3D2C1F" mt="$4">
-        能量模块
-      </Text>
+        <Box
+          px="$4"
+          py="$2"
+          borderRadius="$full"
+          bg="rgba(253, 245, 234, 0.8)"
+          borderWidth={1}
+          borderColor="rgba(240, 185, 137, 0.55)"
+        >
+          <Text fontSize="$xs" color="#A88975">
+            喵屋 ID · 9201
+          </Text>
+        </Box>
+      </HStack>
     </VStack>
   );
 }
@@ -91,6 +112,12 @@ const styles = StyleSheet.create({
   },
   columnWrapper: {
     gap: 12,
+  },
+  placeholder: {
+    flex: 1,
+    paddingVertical: 16,
+    paddingHorizontal: 8,
+    minHeight: 120,
   },
 });
 
